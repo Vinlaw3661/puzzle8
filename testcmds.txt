@@ -1,0 +1,11 @@
+setState 1 2 3 4 5 6 7 8 0
+
+printState
+
+move up
+
+# This is a comment
+
+scramble 10 seed 42
+
+scramble 23
