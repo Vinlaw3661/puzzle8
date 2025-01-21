@@ -169,3 +169,84 @@ class EightPuzzleEngine:
 
         except Exception as e:
             raise Exception(f"Invalid command: {' '.join(command_string)}")
+        
+    def set_state(self, state: list):
+        self.state = state
+        self.valid_moves = self.get_valid_moves()
+        self.save_state()
+
+    def cmd(self, command_string: str):
+        try:
+            result, command_type = self.parse_command(command_string)
+
+            if command_type == Commands.SET:
+                self.set_state(result)
+                print(self.state)
+
+            if command_type == Commands.PRINT:
+                self.print_state(result)
+
+            if command_type == Commands.MOVE:
+                self.move(result)
+                print(self.state)
+
+            if command_type == Commands.COMMENT:
+                print(result)
+
+            if command_type == Commands.CMDFILE:
+                self.cmdfile(result)
+
+            if command_type == Commands.SCRAMBLE:
+                self.scramble(result)
+                print(self.state)
+
+            if command_type == Commands.SEED:
+                self.scramble(result[0], result[1])
+                print(self.state)
+
+        except AssertionError as e:
+            print(e)
+
+        except CommandParsingError as e:
+            print(e)
+
+        except Exception as e:
+            print(e)
+
+    def move(self, move: Moves) -> list:
+
+        # This condition is used for testing purposes,
+        # All command validation is handled in the parse_command method
+        if move not in self.valid_moves:
+            raise Exception(f"Invalid move: {move}")
+
+        free_position = self.state.index(0)
+
+        if move == Moves.UP:
+            target_position = free_position + 3
+        if move == Moves.DOWN:
+            target_position = free_position - 3
+        if move == Moves.LEFT:
+            target_position = free_position + 1
+        if move == Moves.RIGHT:
+            target_position = free_position - 1
+
+        self.state[free_position], self.state[target_position] = \
+            self.state[target_position], self.state[free_position]
+        self.valid_moves = self.get_valid_moves()
+        self.save_state()
+
+    def cmdfile(self, filename: str):
+        with open(filename, 'r') as file:
+            for line in file:
+                line = line.rstrip()  
+
+                if not line.strip():  
+                    print(line) 
+                else:
+                    try:
+                        self.cmd(line.strip().split())  
+                    except Exception as e:
+                        print(line)
+     
+
