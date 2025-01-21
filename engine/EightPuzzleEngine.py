@@ -49,3 +49,23 @@ class EightPuzzleEngine:
                 "valid_moves": [m.value for m in self.valid_moves]
             }, file)
 
+    def get_valid_moves(self) -> list:
+        free_position = self.state.index(0)
+        if free_position == 0:
+            return [Moves.UP, Moves.LEFT]
+        if free_position == 1:
+            return [Moves.UP, Moves.LEFT, Moves.RIGHT]
+        if free_position == 2:
+            return [Moves.UP, Moves.RIGHT]
+        if free_position == 3:
+            return [Moves.LEFT, Moves.DOWN, Moves.UP]
+        if free_position == 4:
+            return [Moves.LEFT, Moves.DOWN, Moves.RIGHT, Moves.UP]
+        if free_position == 5:
+            return [Moves.DOWN, Moves.RIGHT, Moves.UP]
+        if free_position == 6:
+            return [Moves.DOWN, Moves.LEFT]
+        if free_position == 7:
+            return [Moves.DOWN, Moves.LEFT, Moves.RIGHT]
+        if free_position == 8:
+            return [Moves.DOWN, Moves.RIGHT]
