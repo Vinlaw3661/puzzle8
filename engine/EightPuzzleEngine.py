@@ -29,7 +29,7 @@ moves = {
 }
 
 class EightPuzzleEngine:
-    def __init__(self, save_file='SaveState.json'):
+    def __init__(self, save_file='../data/SaveState.json'):
         self.save_file = save_file
         self.goal_state = [0, 1, 2, 3, 4, 5, 6, 7, 8]
         self.state = []
